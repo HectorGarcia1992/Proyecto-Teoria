@@ -1,3 +1,47 @@
+CREATE DATABASE SistemaFacturacion;
+GO
+
+-- Usar la base de datos
+USE SistemaFacturacion;
+GO
+
+-- Tabla Sucursales
+CREATE TABLE Sucursales (
+    SucursalID INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre NVARCHAR(100) NOT NULL,
+    Dirección NVARCHAR(255) NOT NULL,
+    Ciudad NVARCHAR(100) NOT NULL,
+    Teléfono NVARCHAR(15) NOT NULL,
+    Email NVARCHAR(255) NOT NULL
+);
+GO
+
+-- Tabla Clientes
+CREATE TABLE Clientes (
+    ClienteID INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre NVARCHAR(100) NOT NULL,
+    Apellido NVARCHAR(100) NOT NULL,
+    NúmeroIdentidad NVARCHAR(50) NOT NULL UNIQUE,
+    Teléfono NVARCHAR(15) NOT NULL,
+    Email NVARCHAR(255) NOT NULL,
+    FechaNacimiento DATE NOT NULL,
+    TarjetaCredito NVARCHAR(19) NOT NULL
+);
+GO
+
+-- Tabla Facturas
+CREATE TABLE Facturas (
+    FacturaID INT IDENTITY(1,1) PRIMARY KEY,
+    SucursalID INT NOT NULL,
+    ClienteID INT NOT NULL,
+    FechaFactura DATETIME NOT NULL DEFAULT GETDATE(),
+    MontoTotal DECIMAL(18,2) NOT NULL,
+    FormaPago NVARCHAR(50) NOT NULL CHECK (FormaPago IN ('Efectivo', 'Tarjeta de Crédito', 'Débito')),
+    EstadoFactura NVARCHAR(50) NOT NULL CHECK (EstadoFactura IN ('Pagado', 'Pendiente')),
+    FOREIGN KEY (SucursalID) REFERENCES Sucursales(SucursalID),
+    FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)
+);
+GO
 
 
 -- Crear tabla Productos
@@ -21,4 +65,3 @@ CREATE TABLE DetalleFactura (
     Subtotal AS (Cantidad * PrecioUnitario) PERSISTED, -- Calculado y persistido
     CONSTRAINT FK_Producto FOREIGN KEY (ProductoID) REFERENCES Productos(ProductoID)
 );
-
