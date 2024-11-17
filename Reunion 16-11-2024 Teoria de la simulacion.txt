@@ -1,0 +1,18 @@
+
+- Definicion del problema: queremos predecir la taza de retencion de clientes para el 2025 basados en datos desde el 2019-2024. 
+
+-Data poblada
+
+variables discretas (usar algoritmos de clasificacion):
+	-Cantidad de clientes nuevos
+	-Cantidad de clientes al inicio del año
+	-Cantidad de clientes al final del año
+
+Modelo deterministicos(Investigar mas ):
+
+- BD sistema facturacion de migrara a AWS(oncloud) y se minara en Rapidminer(on premise)
+
+-Reunion 8pm 17-11-2024
+
+
+

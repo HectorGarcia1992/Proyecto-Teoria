@@ -1,0 +1,67 @@
+Primer avance: 
+
+Definicion de la simulacion de  tasa de retencion de clientes en un restaurante para el 2025: cuantas veces nos ha visitado un cliente en X tiempo y cuanto a consumido en ese tiempo.
+D
+
+definicion de Kpi que queremos utilizar: La tasa de retención de clientes es un indicador que mide el porcentaje de clientes que una empresa retiene durante un periodo de tiempo determinado, en oposición al churn rate, es decir, al porcentaje que pierde. La tasa de retención de clientes, conocida en inglés Customer Retention Rate (CRR), se expresa como un porcentaje de los clientes existentes de una empresa que permanecen fieles en ese periodo de tiempo.
+
+tasa de retención de clientes = ( Clientes al final - Clientes nuevos  / Cantidad total de clientes al inicio del período )x 100
+
+query: 
+-clientes al final: cantidad total de clientes en un año( count distint)
+-clientes nuevos : clientes que no se tenian en años anteriores(selec)
+-clientes al inicio del periodo: cantidad total  de clientes con los que cerramos el año anterior
+
+Ejemplo : (100000-15000/85758)x100= 99% de retencion de clientes.
+
+Variables
+
+discretas: taza de retencion de clientes
+
+-BD Restaurante el buen sazon.
+
+
+Aspectos a considerar en la BD.
+
+-Minimo 5 años de registros(importante para calcular la CRR)
+-Cantidad de registros 1 millon de registros( entre mas datos tenemos mas 
+preciso es nuestro modelo de simulacion).
+
+BD relacional
+
+ejemplo 50 tablas
+
+DW 
+
+tabla clientes,
+
+Id_cliente,nombre,telefono,Correo,Direccion.
+
+Tabla Factura,
+
+Id_factura,id_cliente,Fecha,consumo,Metodo de pago
+
+
+
+
+continuas:
+
+hay que definir que variables vamos a  para poder saber que algoritmos vamos a utilizar 
+
+Llevar 3 modelos:
+
+vamos a utilizar variables continuas y discretas
+
+
+
+
+Algoritmos: 
+-Querys y Views
+
+Datos:
+
+Datos obtenidos por los algoritmos
+
+
+
+reunion dia de mañana 15-11-2024 8pm
