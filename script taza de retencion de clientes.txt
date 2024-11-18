@@ -1,0 +1,36 @@
+
+
+-- Crear vista para la tasa de retención de clientes por año
+CREATE VIEW TasaRetencionAnual AS
+WITH ClientesPorAño AS (
+    SELECT 
+        ClienteID,
+        YEAR(FechaFactura) AS Año
+    FROM Facturas
+    GROUP BY ClienteID, YEAR(FechaFactura)
+),
+Retencion AS (
+    SELECT 
+        c1.Año AS AñoActual,
+        COUNT(DISTINCT c1.ClienteID) AS ClientesAnioActual,
+        COUNT(DISTINCT c2.ClienteID) AS ClientesRetenidos
+    FROM ClientesPorAño c1
+    LEFT JOIN ClientesPorAño c2
+        ON c1.ClienteID = c2.ClienteID
+        AND c1.Año + 1 = c2.Año
+    GROUP BY c1.Año
+)
+SELECT 
+    AñoActual AS Año,
+    ClientesAnioActual,
+    ClientesRetenidos,
+    CASE 
+        WHEN ClientesAnioActual = 0 THEN 0
+        ELSE ClientesRetenidos*(100*1.0/ClientesAnioActual)
+    END AS TasaRetencion
+FROM Retencion
+
+GO
+
+ select * from TasaRetencionAnual 
+ order by Año asc
