@@ -1,0 +1,6 @@
+
+
+-Definicion del problema; Simular CCR mensual para el 2025
+-Data ;  BD ya con 1M de registros de facturas
+-Algoritmo: CCR Mensual y anual desde el 2019-2024
+

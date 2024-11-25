@@ -1,0 +1,9 @@
+// Proyectar una posible visita ejemplo ultima vez de la visita, 
+// Variables para considerar para predecir cuando regresar el cliente. 
+// Agregar la valoración para la vista de  ProductosFrecuentesPorCliente valoración de producto de 1 a 5 en la tabla detalle factura.
+//Saber la dirección del cliente importante para predecir donde podemos abrir una nueva sucursal.
+// agregar clústeres y árbol de decisión.
+// realizar un árbol de decisiones con la taza de retención de cliente creando una vista con un campo que nos permita predecir (RM) si un cliente regresara o no. Hector
+// proyección geolocalizada realizarlo con vista (SQLSR) Hector.
+Revisar las vistas existentes y ver si nos sirven para los propósitos.
+// para el proyecto final hay que realizar 3 algoritmos 
