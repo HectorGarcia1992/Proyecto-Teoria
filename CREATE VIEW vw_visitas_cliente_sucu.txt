@@ -1,0 +1,18 @@
+CREATE VIEW vw_visitas_cliente_sucursales AS
+SELECT 
+    f.ClienteID,
+    dc.DireccionDetalle AS direccion_cliente,
+    ds.DireccionDetalle AS direccion_sucursal,
+    COUNT(f.SucursalID) AS cantidad_de_visitas,
+    CASE 
+        WHEN COUNT(f.SucursalID) > 30 THEN 1
+        ELSE 0
+    END AS revisita
+FROM 
+    Facturas f
+INNER JOIN 
+    DireccionesClientes dc ON f.ClienteID = dc.ClienteID
+INNER JOIN 
+    DireccionesSucursales ds ON f.SucursalID = ds.SucursalID
+GROUP BY 
+    f.ClienteID, dc.DireccionDetalle, ds.DireccionDetalle; 
