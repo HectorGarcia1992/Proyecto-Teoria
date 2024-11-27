@@ -1,0 +1,70 @@
+CREATE VIEW CRRMensualPrediccion AS
+WITH ClientesPorMes AS (
+    SELECT 
+        ClienteID,
+        YEAR(FechaFactura) AS Año,
+        MONTH(FechaFactura) AS Mes
+    FROM Facturas
+    GROUP BY ClienteID, YEAR(FechaFactura), MONTH(FechaFactura)
+),
+ClientesNuevos AS (
+    SELECT 
+        Año,
+        Mes,
+        COUNT(DISTINCT ClienteID) AS ClientesNuevos
+    FROM ClientesPorMes
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM Facturas f
+        WHERE f.ClienteID = ClientesPorMes.ClienteID
+        AND (YEAR(f.FechaFactura) * 100 + MONTH(f.FechaFactura)) < (ClientesPorMes.Año * 100 + ClientesPorMes.Mes)
+    )
+    GROUP BY Año, Mes
+),
+ClientesTotalesMes AS (
+    SELECT 
+        Año,
+        Mes,
+        COUNT(DISTINCT ClienteID) AS ClientesTotales
+    FROM ClientesPorMes
+    GROUP BY Año, Mes
+),
+ClientesInicioMes AS (
+    SELECT 
+        Año,
+        Mes,
+        LAG(ClientesTotales, 1, 0) OVER (ORDER BY Año, Mes) AS ClientesInicio
+    FROM ClientesTotalesMes
+),
+Resultados AS (
+    SELECT 
+        ct.Año,
+        ct.Mes,
+        ct.ClientesTotales AS ClientesFinal,
+        cn.ClientesNuevos,
+        ci.ClientesInicio
+    FROM ClientesTotalesMes ct
+    LEFT JOIN ClientesNuevos cn
+        ON ct.Año = cn.Año AND ct.Mes = cn.Mes
+    LEFT JOIN ClientesInicioMes ci
+        ON ct.Año = ci.Año AND ct.Mes = ci.Mes
+)
+SELECT 
+    Año,
+    Mes,
+    ClientesFinal,
+    ClientesNuevos,
+    ClientesInicio,
+    CASE 
+        WHEN ClientesInicio = 0 THEN 0
+        ELSE ((ClientesFinal - ClientesNuevos) * 1.0 / ClientesInicio) * 100
+    END AS TasaRetencion,
+    -- Campo de predicción para RapidMiner
+    CASE
+        WHEN CASE 
+                 WHEN ClientesInicio = 0 THEN 0
+                 ELSE ((ClientesFinal - ClientesNuevos) * 1.0 / ClientesInicio) * 100
+             END >= 75 THEN 'Sí'
+        ELSE 'No'
+    END AS prob_cliente_regrese 
+FROM Resultados;
