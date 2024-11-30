@@ -7,3 +7,25 @@
 // proyección geolocalizada realizarlo con vista (SQLSR) Hector.
 Revisar las vistas existentes y ver si nos sirven para los propósitos.
 // para el proyecto final hay que realizar 3 algoritmos 
+
+Construcción del modelo en RapidMiner
+Importación de datos:
+
+Usa la vista CRRMensualPrediccion como fuente de datos en RapidMiner conectándote a la base de datos con un operador de tipo "Read Database".
+Selección de atributos:
+
+Atributos relevantes:
+Año, Mes, ClientesInicio, ClientesFinal, ClientesNuevos, TasaRetencion.
+ClienteRegresa será el atributo objetivo (etiqueta).
+Creación del árbol de decisiones:
+
+Usa el operador "Decision Tree" en RapidMiner.
+Configura el atributo ClienteRegresa como la etiqueta (variable dependiente).
+Ajusta los parámetros del operador para evitar sobreajuste (ejemplo: establece una profundidad máxima del árbol).
+Entrenamiento y validación:
+
+Usa un conjunto de datos dividido entre entrenamiento y validación (por ejemplo, 70%-30%).
+Evalúa el modelo con una métrica como precisión, recall o F1-score.
+Exportación del modelo:
+
+Puedes usar el modelo para predecir valores futuros de ClienteRegresa con nuevos datos mensuales.
