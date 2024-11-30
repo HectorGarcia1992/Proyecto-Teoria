@@ -312,7 +312,7 @@ clientes = [row[0] for row in cursor.fetchall()]
 #insertar direcciones de clientes
 def insertar_direcciones():
     # Configurar lotes de inserción
-    num_direcciones = 500  # Total de direcciones a insertar
+    num_direcciones = 1200000  # Total de direcciones a insertar
     batch_size = 100
     batch = []
 
