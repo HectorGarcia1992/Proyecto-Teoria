@@ -1,0 +1,21 @@
+-Realizar una conexion remota con la computadora de Omer.
+
+
+	
+
+- Definicion del problema Ya
+- Preparacion de datos
+	- BD
+- Exploracion de datos
+	-Vistas
+- Creacion de modelos
+	-Arbol 
+- Exploracion y validacion de modelos
+	
+- Implementar y actualizar los Modelos
+
+checklist de estructura del informe.
+-Introduccion
+-Codigos(Faker)
+-Script de la BD y las Vistas
+-Diagrama relacionales.

@@ -1,18 +1,22 @@
 CREATE VIEW vw_visitas_cliente_sucursales AS
 SELECT 
-    f.ClienteID,
-    dc.DireccionDetalle AS direccion_cliente,
-    ds.DireccionDetalle AS direccion_sucursal,
-    COUNT(f.SucursalID) AS cantidad_de_visitas,
+    F.ClienteID,
+    DC.DireccionDetalle AS DireccionCliente, -- Dirección del cliente
+    F.SucursalID,
+    S.Nombre AS NombreSucursal,
+    COUNT(F.FacturaID) AS CantidadVisitas,
+    SUM(F.MontoTotal) AS TotalGastado, -- Suma del monto total de facturas
+    AVG(F.Valoracion * 1.0) AS ValoracionPromedio, -- Promedio de valoraciones (convertido a decimal)
+    DATEDIFF(DAY, MAX(F.FechaFactura), GETDATE()) AS DiasDesdeUltimaVisita, -- Días desde la última visita
     CASE 
-        WHEN COUNT(f.SucursalID) > 30 THEN 1
-        ELSE 0
-    END AS revisita
+        WHEN COUNT(F.FacturaID) >= 30 THEN 'Sí'
+        ELSE 'No'
+    END AS Revisita
 FROM 
-    Facturas f
-INNER JOIN 
-    DireccionesClientes dc ON f.ClienteID = dc.ClienteID
-INNER JOIN 
-    DireccionesSucursales ds ON f.SucursalID = ds.SucursalID
+    Facturas F
+INNER JOIN Clientes C ON F.ClienteID = C.ClienteID
+INNER JOIN DireccionesClientes DC ON C.ClienteID = DC.ClienteID -- Unir con la dirección del cliente
+INNER JOIN Sucursales S ON F.SucursalID = S.SucursalID
 GROUP BY 
-    f.ClienteID, dc.DireccionDetalle, ds.DireccionDetalle; 
+    F.ClienteID, DC.DireccionDetalle, F.SucursalID, S.Nombre;
+GO
