@@ -14,5 +14,5 @@ JOIN
 JOIN 
     Sucursales s ON f.SucursalID = s.SucursalID
 JOIN 
-    MetodosPago mp ON f.MetodoPagoID = mp.MetodoPagoID;# Proyecto Teoria
- IIIPAC2024
+    MetodosPago mp ON f.MetodoPagoID = mp.MetodoPagoID;
+
